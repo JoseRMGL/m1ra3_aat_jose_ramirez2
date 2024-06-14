@@ -26,6 +26,10 @@ class SueldoLiquido {
         this.prestamos = valor;
     }
     // asignar metodos
+    public Igss() {
+        this.resultado = this.salario * 0.0483;
+        return "El IGSS es: " + this.resultado.toFixed(2);
+    }
     public totalGanado() {
         this.resultado = this.salario + this.bonificacion + this.comisiones;
         return "El total ganado es: " + this.resultado.toFixed(2);
@@ -38,17 +42,15 @@ class SueldoLiquido {
         this.resultado = (this.salario + this.bonificacion + this.comisiones) - (this.ahorro + this.igss + this.prestamos);
         return "El sueldo liquido es: " + this.resultado.toFixed(2);
     }
-    public Igss() {
-        this.resultado = this.salario * 0.0483;
-        return "El IGSS es: " + this.resultado.toFixed(2);
-    }
 }
 // creacion de obtejos
 const sueldoLiquido = new SueldoLiquido();
 const resultado = document.getElementById("resultados") as HTMLParagraphElement;
 const ganado = document.getElementById("totalGanado") as HTMLParagraphElement;
 const descuentos = document.getElementById("totalDescuentos") as HTMLParagraphElement;
-const asignarIgss = document.getElementById("igss") as HTMLParagraphElement;
+const igssAsignado = document.getElementById("igss") as HTMLParagraphElement;
+const btnResultado = document.getElementById("btnCalcular") as HTMLButtonElement;
+btnResultado.addEventListener('click', totalGanado);
 function valores() {
     sueldoLiquido.asignarIgss();
     sueldoLiquido.asignarSalario(parseFloat((document.getElementById("salario") as HTMLInputElement).value));
@@ -57,9 +59,10 @@ function valores() {
     sueldoLiquido.asignarAhorro(parseFloat((document.getElementById("ahorro") as HTMLInputElement).value));
     sueldoLiquido.asignarPrestamos(parseFloat((document.getElementById("prestamos") as HTMLInputElement).value));
 }
+  
 function totalGanado() {
     valores();
-    asignarIgss.textContent = sueldoLiquido.Igss();
+    igssAsignado.textContent = sueldoLiquido.Igss();
     ganado.textContent = sueldoLiquido.totalGanado();
     descuentos.textContent = sueldoLiquido.totalDescuentos();
     resultado.textContent = sueldoLiquido.sueldoLiquido();
